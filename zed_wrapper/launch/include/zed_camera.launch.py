@@ -5,7 +5,7 @@ import os
 from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
+from launch.actions import DeclareLaunchArgument, Shutdown
 from launch.conditions import IfCondition
 from launch.substitutions import LaunchConfiguration, Command
 from launch_ros.actions import Node
@@ -127,6 +127,7 @@ def generate_launch_description():
 
     # Robot State Publisher node
     rsp_node = Node(
+        on_exit=Shutdown(),
         condition=IfCondition(publish_urdf),
         package='robot_state_publisher',
         namespace=camera_name,
@@ -155,6 +156,7 @@ def generate_launch_description():
 
     # ZED Wrapper node
     zed_wrapper_node = Node(
+        on_exit=Shutdown(),
         package='zed_wrapper',
         namespace=camera_name,
         executable='zed_wrapper',
