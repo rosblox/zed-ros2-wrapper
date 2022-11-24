@@ -1,4 +1,16 @@
-#!/usr/bin/env python3
+# Copyright 2022 Stereolabs
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 import os
 
@@ -22,6 +34,8 @@ def generate_launch_description():
 
     # Launch configuration variables (can be changed by CLI command)
     svo_path = LaunchConfiguration('svo_path')
+    zed_id = LaunchConfiguration('zed_id')
+    serial_number = LaunchConfiguration('serial_number')
 
     # Configuration variables
     # Camera name. Can be different from camera model, used to distinguish camera in multi-camera systems
@@ -95,11 +109,23 @@ def generate_launch_description():
         default_value='live', # 'live' used as patch for launch files not allowing empty strings as default parameters
         description='Path to an input SVO file. Note: overrides the parameter `general.svo_file` in `common.yaml`.')
 
+    declare_zed_id_cmd = DeclareLaunchArgument(
+        'zed_id',
+        default_value='0',
+        description='The index of the camera to be opened. To be used in multi-camera rigs.')
+
+    declare_serial_number_cmd = DeclareLaunchArgument(
+        'serial_number',
+        default_value='0',
+        description='The serial number of the camera to be opened. To be used in multi-camera rigs. Has priority with respect to `zed_id`.')
+
     # Define LaunchDescription variable
     ld = LaunchDescription()
 
     # Launch parameters
     ld.add_action(declare_svo_path_cmd)
+    ld.add_action(declare_zed_id_cmd)
+    ld.add_action(declare_serial_number_cmd)
 
     # Add nodes to LaunchDescription
     ld.add_action(zed_wrapper_launch)

@@ -1,6 +1,16 @@
 LATEST CHANGES
 ==============
 
+2022-11-18
+----------
+- Code lint and re-formatting according to [ROS2 code rules](https://docs.ros.org/en/humble/The-ROS2-Project/Contributing/Code-Style-Language-Versions.html).
+- Add support for automatic lint tools to all the packages.
+- Change LICENSE to Apache 2.0 to match ROS2 license.
+
+2022-11-17
+----------
+- Added `zed_id` and `serial_number` launch parameters to open the correct camera in multi-camera configurations.
+
 v3.8.x
 ------
 - Fixed `set_pose` wrong behavior. Now initial odometry is coherent with the new starting point.
